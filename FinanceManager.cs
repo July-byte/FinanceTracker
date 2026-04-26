@@ -1,14 +1,57 @@
 using System;
 using System.Colletions.Generic;
 using System.Linq;
-
+using System.IO;
+using System.Text.Json;
 namespace FinanceTracker
 {
   public class FinanceManager
   {
     private List<Transaction> transactions = new List<Transaction>();
     private int nextId = 1;
+    private string filePath = "transactions.json";
+    public void SaveToFile()
+    {
+      try
+      {
+        var options = new JsonSerializeOptions
+        {
+          WriteIndented = true
+        };
+        string json = JsonSerializer.Serialize(transactions, options);
+        File.WriteAllText(filePath, json);
+      }
+
+      catch (Exception ex)
+      {
+        Console.WriteLine("Ошибка при сохранении: " + ex.Message);
+      }
+    }
+
+    public void LoadFromFile()
+    {
+      try
+      {
+        if (!File.Exists(filePath))
+          return;
+        string json = File.ReadAllText(filePath);
+        var loadedTransactions = JsonSerializer.Deserializer<List<Transaction>>(json);
+        if (loadedTransactions != null)
+        {
+          transactions = loadedTransactions;
+          if (transactions.Any())
+            nextId = transactions.Max(t => t.Id) + 1;
+        }
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine("Ошибка при загрузке: " + ex.Message);
+      }
+    }
+    
+        
     public void AddTransaction(decimal amount, string category, TransactionType type)
+    
     {
       if (amount <= 0)
       {
