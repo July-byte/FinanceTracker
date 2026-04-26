@@ -9,6 +9,10 @@ namespace FinanceTracker
     public TransactionType { get; set; }
     public DateTime Date { get; set; }
 
+    public Transaction()
+    {
+    }
+
     public Transaction (int id, decimal amount, string category, TransactionType type)
     {
       Id = id;
