@@ -99,6 +99,34 @@ namespace FinanceTracker
         Console.WriteLine(transaction);
       }
     }
+
+    public void ShowSorted(string sortBy, bool descending)
+    {
+      if (!transactions.Any())
+      {
+        Console.WriteLine("Операций пока нет");
+        return;
+      }
+      IEnumerable<Transaction> sorted;
+      switch (sortBy.ToLower())
+      {
+        case "date":
+          sorted = descending 
+          ? transactions.OrderByDescending(t => t.Date)
+          : transactions.OrderBy(t => t.Date);
+          break;
+        case "amount":
+          sorted = descending
+            ? transactions.OrderByDescending(t => t.Amount)
+            : transations.OrderBy(t => t.Amount);
+          break;
+        default:
+          Console.WriteLine("Неверный параметр сортировки");
+          return;
+      }
+      foreach (var transaction in sorted)
+      {
+        Console.WriteLine(transaction);
   }
 }
 
