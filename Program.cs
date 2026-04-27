@@ -40,6 +40,10 @@ namespace FinanceTracker
         }
       }
     }
+
+    FinanceManager manager = new FinanceManager();
+    manager.LoadFromFile();
+    
     static void AddTransaction(FinanceManager manager, TransactionType type)
     {
       Console.Write("Введите сумму: ");
@@ -51,6 +55,7 @@ namespace FinanceTracker
       Console.Write("Введите категорию: ");
       string category = Console.ReadLine();
       manager.AddTransaction(amount, category, type);
+      manager.SaveToFile();
     }
   }
 }
