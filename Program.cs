@@ -14,6 +14,7 @@ namespace FinanceTracker
         Console.WriteLine("4 - Показать баланс");
         Console.WriteLine("5 - Фильтр по категории");
         Console.WriteLine("6 - Выход");
+        Console.WriteLine("7 - Сортировка");
         Console.WriteLine("Выбор: ");
         string input = Console.ReadLine();
         switch (input)
