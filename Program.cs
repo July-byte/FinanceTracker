@@ -36,6 +36,22 @@ namespace FinanceTracker
             string category = Console.ReadLine();
             manager.ShowByCategory(category);
             break;
+          case "6":
+            Console.WriteLine("Сортировать по: ");
+            Console.WriteLine("1 - Дата"):
+            Console.WriteLine("2 - Сумма");
+            string sortOption = Console.ReadLine();
+            Console.WriteLine("1 - По возрастанию");
+            Console.WriteLine("2 - По убыванию");
+            string orderOption = Console.ReadLine();
+            bool descending = orderOption == "2";
+            if (sortOption == "1")
+              manager.ShowSorted("date", descending);
+            else if (sortOption == "2")
+              manager.ShowSorted("amount", "descending");
+            else
+              Console.WriteLine("Неверный выбор");
+            break;
           case "0":
             return;
         }
