@@ -128,5 +128,51 @@ namespace FinanceTracker
       {
         Console.WriteLine(transaction);
   }
+    public void ShowAnalytics()
+    {
+      if (!transactions.Any())
+      {
+        Console.WriteLine("Нет данных для анализа");
+        return;
+      }
+      decimal totalIncome = transactions
+        .Where(t => t.Type == TransactionType.Income)
+        .Sum(t => t.Amount);
+
+      decimal totalExpenses = transactions
+        .Where(t => t.Type == TransactionType.Expense)
+        .Sum(t => t.Amount);
+
+      decimal balance = totalIncome - totalExpenses;
+
+      Console.WriteLine("\n===Аналитический отчет===");
+      Console.WriteLine($"Общий доход: {totalIncome}");
+      Console.WriteLine($"Общий расход: {totalExpenses}");
+      Console.WriteLine($"Баланс: {balance}");
+
+      var largestExpense = transactions
+        .Where(t => t.Type == TransactionType.Expense)
+        .OrderByDescending(t => t.Amount)
+        .FirstOrDefault();
+
+      if (largestExpense != null)
+      {
+        Console.WriteLine($"Самая большая трата: {largest.Expense.Category} - {largestExpense.Amount}");
+      }
+      Console.WriteLine("\nРасходы по категориям:");
+      var expensesByCategory = transactions
+        .Where(t => t.Type == TransactionType.Expense)
+        .GroupBy(t => t.Category)
+        .Select(g => new
+                {
+                  Category = g.Key,
+                  Total = g.Sum(t => t.Amount)
+                  })
+        .OrderByDescending(x => x.Total);
+
+      foreach (var item in expensesByCategory)
+      {
+        Console.WriteLine($"{item.Category}:{item.Total}");
+      }
 }
 
