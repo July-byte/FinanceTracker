@@ -15,6 +15,7 @@ namespace FinanceTracker
         Console.WriteLine("5 - Фильтр по категории");
         Console.WriteLine("6 - Выход");
         Console.WriteLine("7 - Сортировка");
+        Console.WriteLine("8 - Аналитический отчет");
         Console.WriteLine("Выбор: ");
         string input = Console.ReadLine();
         switch (input)
@@ -51,6 +52,9 @@ namespace FinanceTracker
               manager.ShowSorted("amount", "descending");
             else
               Console.WriteLine("Неверный выбор");
+            break;
+          case "7":
+            manager.ShowAnalytics();
             break;
           case "0":
             return;
